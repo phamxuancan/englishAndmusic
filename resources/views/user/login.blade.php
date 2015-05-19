@@ -5,9 +5,9 @@
         <form action="#" id="form_login" class="text-center form-horizontal" role="form" style="background: #dfffd0;margin-top:50px;" enctype="multipart/form-data">
             <div class="form-group alert-danger alert_error"></div>
             <div class="form-group ">
-                 <label class="control-label col-lg-2 col-lg-offset-3" for="email">email :</label>
+                 <label class="control-label col-lg-2 col-lg-offset-3" for="username">Username :</label>
                  <div class="col-lg-2">
-                    <input type="text" name="email" id="email" class="form-group" />
+                    <input type="text" name="username" id="username" class="form-group" />
                  </div>
             </div>
             <div class="form-group ">

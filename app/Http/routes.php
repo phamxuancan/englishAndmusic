@@ -24,14 +24,15 @@ Route::get('users/login', 'UserController@authentication');
 Route::post('/users/confirm', 'UserController@confirm');
 Route::post('users/addUser', 'UserController@addUser');
 Route::get('/', 'UserController@index');
+Route::get('/loadWord', 'WordController@loadWord');
 
 Route::get('users/create', function(){
    App\User::create(array(
-        'email'=>'xuancan',
+        'username'=>'xuancan',
         'password'=> \Illuminate\Support\Facades\Hash::make('123456')
     ));
     var_dump(Auth::attempt(array(
-            'email'=>'xuancan',
+            'username'=>'xuancan',
             'password'=>'123456'
     )));
 

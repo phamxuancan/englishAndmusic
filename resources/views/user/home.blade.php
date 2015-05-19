@@ -9,14 +9,14 @@
        </marquee>
        -->
        <marquee behavior="scoll"  direction="left" class="col-lg-12">
-            <span class="col-lg-6 text-center btn-default btn-success btn-lg">{{$user->email}}</span>
+            <span class="col-lg-6 text-center btn-default btn-success btn-lg">{{$user->username}}</span>
        </marquee>
        <span class="col-lg-12">Word :  </span>
     </div>
     <div class="col-lg-2 ">
-        <span>
+        <span></span>
     </div>
-   <div class="col-lg-8" >
+   <div class="col-lg-8" id="word_table">
         <table class="table table-striped table-bordered table-hover table-condensed col-lg-10">
             <thead class="">
                 <tr>
@@ -46,8 +46,9 @@
                     <td class="col-lg-3 text-center">
                         {{base64_decode($word->pronunciation)}}
                     </td>
-                    <td class="col-lg-3 text-center">
-                        <span class="glyphicon glyphicon-volume-up text-center action" onclick="reading('{{ URL::to('/').'/sounds/'.$word->file_name}}');" style="cursor: pointer"></span>
+                    <td class="col-lg-3 text-center read_sound" >
+                        <div class="glyphicon glyphicon-volume-up text-center action" value='{{ URL::to('/').'/sounds/'.$word->file_name}}' style="cursor: pointer">
+                        </div>
                     </td>
                 </tr>
             @endforeach
@@ -77,13 +78,13 @@
                           <div class="form-group">
                               <label for="pronunciation" class="control-label col-lg-3">Pronunciation</label>
                               <div class="col-lg-9">
-                                  <input type="pronunciation" class="form-control" name="pronunciation" id="pronunciation" placeholder="Enter Pronunciation...">
+                                  <input type="text" class="form-control" name="pronunciation" id="pronunciation" placeholder="Enter Pronunciation...">
                               </div>
                           </div>
                           <div class="form-group">
                               <label for="vietnamese" class="control-label col-lg-3">Vietnamese</label>
                               <div class="col-lg-9">
-                                  <input type="vietnamese" class="form-control" id="vietnamese" name="vietnamese" placeholder="Enter vietnamese...">
+                                  <input type="text" class="form-control" id="vietnamese" name="vietnamese" placeholder="Enter vietnamese...">
                               </div>
                           </div>
                           <div class="form-group">
@@ -144,10 +145,18 @@
             </div>
       </div>
       <script type="text/javascript">
-           function reading(link){
-                var audio = new Audio(link);
-                audio.play();
-           }
+        var audios = '';
+          $(".action").mouseenter(function(){
+          that = this;
+             var audio = new Audio($(this).attr('value'));
+                 audio.play();
+                 that.audios = audio;
+          })
+          $(".action").mouseleave(function(){
+             audio = that.audios;
+              audio.pause();
+          })
+
       </script>
 
 @endsection

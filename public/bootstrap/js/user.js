@@ -45,6 +45,7 @@ var user = {
                     $(myself).button('reset');
                 }else
                 {
+                    location.href = '/users';
                     $('#registerForm').modal('hide');
                     $('#registerForm').find('form')[0].reset();
                     $(myself).button('reset');
@@ -57,6 +58,7 @@ var user = {
         });
     },
     insertWord:function(that,user_id){
+        myself = this;
         var form = $('#formInsertword')[0];
         formDatas = new FormData(form);
         formDatas.append("user_id",user_id)
@@ -70,9 +72,13 @@ var user = {
                $(that).button('loading');
            },
             success:function(result){
-              console.log(result);
+             $('#insertWord').modal('hide');
+             $(that).button('reset');
+             myself.loadWord();
             },
             error:function(result){
+                $('#insertWord').modal('hide');
+                $(that).button('reset');
                 console.log(result);
             }
         });
@@ -81,5 +87,19 @@ var user = {
         $('#insertWord').modal('hide');
         $('#'+form)[0].reset();
         $(myself).button('reset');
+    },
+    loadWord:function(){
+        that = this;
+        $.ajax({
+            url:'/loadWord',
+            data:'',
+            type:'GET',
+            success:function(result){
+                $('#word_table').html(result);
+            },
+            error:function(result){
+                $('#word_table').html(result);
+            }
+        })
     }
 };

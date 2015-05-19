@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use App\Models\User_Words;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Created by PhpStorm.
@@ -53,6 +54,21 @@ use App\Models\User_Words;
         }catch (\Exception $e){
             return response()->json(array("message" =>$e->getMessage(), "error" => 1));
         }
-
-        }
     }
+    public function loadWord(){
+        $datas = User_Words::getInstance()->getObject(array('user_id'=>Auth::user()->id));
+        $word_ids = array();
+        if(count($datas)>0){
+            foreach($datas as $data){
+                $word_ids[] = $data->id;
+            }
+        }
+        $words = array();
+        if(count($word_ids) > 0){
+            $inWordIds = implode("','",$word_ids);
+            $words = Word::getInstance()->getObjectsInArrayIds('id',$inWordIds);
+        }
+
+        return view('content.list_word',array('data'=>$words));
+    }
+}
